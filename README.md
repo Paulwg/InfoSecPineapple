@@ -1,4 +1,3 @@
-Host analysis as simple as possible.
 
 <h1 align="center">InfoSecPineapple</h1>
 
