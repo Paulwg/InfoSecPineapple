@@ -2,7 +2,7 @@
 <h1 align="center">InfoSecPineapple</h1>
 
 <p align="center">
-  <img src="https://github.com/Paulwg/InfoSecPineapple/blob/master/Images/InfoSecPineapple.png?raw=true" width="215" height="300">
+  <img src="https://github.com/Paulwg/InfoSecPineapple/blob/master/Images/InfoSecPineapple.png?raw=true" width="100" height="140">
 </p>
 
 <h3 align="center">Project developed by Paul Groce,<a href="https://twitter.com/paulwsterling">@paulwsterling</a></h3>
