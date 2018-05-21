@@ -1,6 +1,10 @@
 
 <h1 align="center">InfoSecPineapple</h1>
 
+<p align="center">
+  <img src="https://github.com/Paulwg/InfoSecPineapple/blob/master/Images/InfoSecPineapple.png?raw=true" width="215" height="300">
+</p>
+
 <h3 align="center">Project developed by Paul Groce,<a href="https://twitter.com/paulwsterling">@paulwsterling</a></h3>
 
 [![docs status](https://readthedocs.org/projects/powerforensics/badge/?version=latest)](https://powerforensics.readthedocs.io/en/latest/)
