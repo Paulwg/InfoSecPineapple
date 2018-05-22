@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 from tkinter.constants import *
 from tkinter import *
+import subprocess
 
 class App(Frame):
     '''
@@ -25,25 +26,25 @@ class App(Frame):
 
     def create_variables(self):
         self.MODES = [
-            ("AppCompatCache", "1"),
-            ("Process Table","2"),
-            ("Prefetch","3"),
-            ("Network Connections","4"),
-            ("Auto Runs","5"),
-            ("Sched Tasks","6"),
-            ("Startup Folders","7"),
-            ("Services","8"),
-            ("Installed Software","9"),
-            ("Unsigned Executables","10"),
-            ("Installed Drivers","11"),
-            ("ADS","12"),
-            ("Dir Walk","13"),
-            ("VSC Walk,Timestamps","14"),
-            ("MFT timestamps","15"),
+            ("AppCompatCache"),
+            ("Process Table"),
+            ("Prefetch"),
+            ("Network Connections"),
+            ("Auto Runs"),
+            ("Sched Tasks"),
+            ("Startup Folders"),
+            ("Services"),
+            ("Installed Software"),
+            ("Unsigned Executables"),
+            ("Installed Drivers"),
+            ("ADS"),
+            ("Dir Walk"),
+            ("VSC Walk,Timestamps"),
+            ("MFT timestamps"),
         ]
         self.v = StringVar()
         self.v.set("L")
-        self.i = 4
+        self.i = 5
         self.d = 0
 
     def create_widgets(self):
@@ -64,11 +65,13 @@ class App(Frame):
         self.label2 = Label(self, text="IP Address:")
         self.label3 = Label(self, text="Username:")
         self.label4 = Label(self, text="Password:")
+        self.label5 = Label(self, text="Path:")
 
         self.entry1 = Entry(self)
         self.entry2 = Entry(self)
         self.entry3 = Entry(self)
         self.entry4 = Entry(self)
+        self.entry5 = Entry(self)
 
         self.b = Radiobutton(self)
 
@@ -84,14 +87,16 @@ class App(Frame):
         self.label2.grid(row = 1,**options1)
         self.label3.grid(row = 2,**options1)
         self.label4.grid(row = 3,**options1)
+        self.label5.grid(row = 4,**options1)
 
         self.entry1.grid(row = 0,column = 1)
         self.entry2.grid(row = 1,column = 1)
         self.entry3.grid(row = 2,column = 1)
         self.entry4.grid(row = 3,column = 1)
+        self.entry5.grid(row = 4,column = 1)
 
-        for text, mode in self.MODES:
-            self.b = Radiobutton(self,text=text,variable=self.v,value=mode,
+        for text in self.MODES:
+            self.b = Radiobutton(self,text=text,variable=self.v,value=text,
                             anchor=W,justify=LEFT,width=16,command=self.sel)
             self.b.grid(row = self.i,column=self.d)
             if(self.d == 1):
@@ -107,20 +112,65 @@ class App(Frame):
         
     #To be completed functions
 
-    def Login(self):
-        pass
-
     def sel(self):
-        self.radioButt = int(self.v.get())
+        self.radioButt = str(self.v.get())
         self.ComputerName = self.entry1.get()
         self.Ipaddress = self.entry2.get()
         self.User = self.entry3.get()
         self.Passw = self.entry4.get()
-
+        self.TarPath = self.entry5.get()
+    
+    def AppCompatCache(self):
+        pass
+    
+    def Process_Table(self):
+        subprocess.call(["C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe","get-process"])
+     
+    def Prefetch(self):
+        pass
+     
+    def Network_Connections(self):
+        subprocess.call(["C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe","get-nettcpconnection"])
+     
+    def Auto_Runs(self):
+        pass
+     
+    def Sched_Tasks(self):
+        pass
+     
+    def Startup_Folders(self):
+        pass
+     
+    def Services(self):
+        pass
+     
+    def Installed_Software(self):
+        pass
+     
+    def Unsigned_Executables(self):
+        pass
+     
+    def Installed_Drivers(self):
+        pass
+     
+    def ADS(self):
+        pass
+    
+    def Dir_Walk(self):
+        pass
+     
+    def VSC_Walk_Timestamps(self):
+        pass
+     
+    def MFT_timestamps(self):
+        pass
+    
     def execute(self):
-        print(self.radioButt)
-        print(self.ComputerName, self.Ipaddress, self.User, self.Passw)
-
+        arg = self.radioButt.replace(" ","_")
+        print(arg)
+        result = getattr(self, arg)
+        result()
+    
 
 if __name__ == '__main__':
     App.main()
