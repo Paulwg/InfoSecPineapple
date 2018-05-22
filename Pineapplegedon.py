@@ -44,7 +44,9 @@ class App(Frame):
         ]
         self.v = StringVar()
         self.v.set("L")
-        self.i = 5
+        self.a = StringVar()
+        self.a.set("A")
+        self.i = 6
         self.d = 0
 
     def create_widgets(self):
@@ -73,7 +75,10 @@ class App(Frame):
         self.entry4 = Entry(self)
         self.entry5 = Entry(self)
 
-        self.b = Radiobutton(self)
+        self.button1 = Radiobutton(self,text="Local",variable=self.a,value=1)#local or remote
+        self.button2 = Radiobutton(self,text="Remote",variable=self.a,value=2)
+
+        self.b = Radiobutton(self)#List of Selections
 
         self.submit = Button(self, text="Submit", command=self.execute)
 
@@ -88,6 +93,8 @@ class App(Frame):
         self.label3.grid(row = 2,**options1)
         self.label4.grid(row = 3,**options1)
         self.label5.grid(row = 4,**options1)
+        self.button1.grid(row = 5,column = 0,**options)
+        self.button2.grid(row = 5,column = 1,**options)
 
         self.entry1.grid(row = 0,column = 1)
         self.entry2.grid(row = 1,column = 1)
