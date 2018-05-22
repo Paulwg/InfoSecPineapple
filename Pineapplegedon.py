@@ -1,7 +1,6 @@
 #! /usr/bin/env python
 from tkinter.constants import *
 from tkinter import *
-import subprocess
 
 class App(Frame):
     '''
@@ -44,8 +43,6 @@ class App(Frame):
         ]
         self.a = StringVar()
         self.a.set("A")
-        self.b = StringVar()
-        self.b.set("B")
         self.c = IntVar()
         self.i = 6
         self.d = 0
@@ -76,8 +73,8 @@ class App(Frame):
         self.entry4 = Entry(self)
         self.entry5 = Entry(self)
 
-        self.button1 = Radiobutton(self,text="Local",variable=self.b,value=1,indicatoron=0,command=self.c.set(0))#local or remote
-        self.button2 = Radiobutton(self,text="Remote",variable=self.b,value=2,indicatoron=0,command=self.c.set(1))
+        self.button1 = Radiobutton(self,text="Local",variable=self.c,value=0,indicatoron=0)#local or remote
+        self.button2 = Radiobutton(self,text="Remote",variable=self.c,value=1,indicatoron=0)
 
         self.buttonlist = Radiobutton(self)#List of Selections
 
@@ -105,7 +102,7 @@ class App(Frame):
 
         for text in self.MODES:
             self.buttonlist = Radiobutton(self,text=text,variable=self.a,value=text,
-                            anchor=W,justify=LEFT,width=16,command=self.sel)
+                            anchor=W,justify=LEFT,width=16,command=self.select)
             self.buttonlist.grid(row = self.i,column=self.d)
             if(self.d == 1):
                 self.i += 1
@@ -120,66 +117,25 @@ class App(Frame):
         
     #To be completed functions
 
-    def sel(self):
+    def select(self):
         self.radioButt = str(self.a.get())
         self.ComputerName = self.entry1.get()
         self.Ipaddress = self.entry2.get()
         self.User = self.entry3.get()
         self.Passw = self.entry4.get()
         self.TarPath = self.entry5.get()
-        self.LocalRemote = int(self.c.get())
-    
-    def AppCompatCache(self):
-        pass
-    
-    def Process_Table(self):
-        subprocess.call(["C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe","get-process"])
-     
-    def Prefetch(self):
-        pass
-     
-    def Network_Connections(self):
-        subprocess.call(["C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe","get-nettcpconnection"])
-     
-    def Auto_Runs(self):
-        pass
-     
-    def Sched_Tasks(self):
-        pass
-     
-    def Startup_Folders(self):
-        pass
-     
-    def Services(self):
-        pass
-     
-    def Installed_Software(self):
-        pass
-     
-    def Unsigned_Executables(self):
-        pass
-     
-    def Installed_Drivers(self):
-        pass
-     
-    def ADS(self):
-        pass
-    
-    def Dir_Walk(self):
-        pass
-     
-    def VSC_Walk_Timestamps(self):
-        pass
-     
-    def MFT_timestamps(self):
-        pass
+
+    def Make_Decision_Local_Remote(self,arg):
+        import Juice
+        MethodToBeCalled = arg
+        if(self.c.get() == 0):
+            Juice.Juice(0,MethodToBeCalled)
+        if(self.c.get() == 1):
+            Juice.Juice(1,MethodToBeCalled)
     
     def execute(self):
-        arg = self.radioButt.replace(" ","_")
-        print(arg)
-        print(self.LocalRemote)
-        result = getattr(self, arg)
-        result()
+        arg = self.radioButt.replace(" ","_")        
+        self.Make_Decision_Local_Remote(arg)
     
 
 if __name__ == '__main__':
