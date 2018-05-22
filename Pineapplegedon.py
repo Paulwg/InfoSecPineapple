@@ -42,10 +42,11 @@ class App(Frame):
             ("VSC Walk,Timestamps"),
             ("MFT timestamps"),
         ]
-        self.v = StringVar()
-        self.v.set("L")
         self.a = StringVar()
         self.a.set("A")
+        self.b = StringVar()
+        self.b.set("B")
+        self.c = IntVar()
         self.i = 6
         self.d = 0
 
@@ -75,10 +76,10 @@ class App(Frame):
         self.entry4 = Entry(self)
         self.entry5 = Entry(self)
 
-        self.button1 = Radiobutton(self,text="Local",variable=self.a,value=1)#local or remote
-        self.button2 = Radiobutton(self,text="Remote",variable=self.a,value=2)
+        self.button1 = Radiobutton(self,text="Local",variable=self.b,value=1,indicatoron=0,command=self.c.set(0))#local or remote
+        self.button2 = Radiobutton(self,text="Remote",variable=self.b,value=2,indicatoron=0,command=self.c.set(1))
 
-        self.b = Radiobutton(self)#List of Selections
+        self.buttonlist = Radiobutton(self)#List of Selections
 
         self.submit = Button(self, text="Submit", command=self.execute)
 
@@ -93,8 +94,8 @@ class App(Frame):
         self.label3.grid(row = 2,**options1)
         self.label4.grid(row = 3,**options1)
         self.label5.grid(row = 4,**options1)
-        self.button1.grid(row = 5,column = 0,**options)
-        self.button2.grid(row = 5,column = 1,**options)
+        self.button1.grid(row = 5,column = 0,**options1)
+        self.button2.grid(row = 5,column = 1,**options1)
 
         self.entry1.grid(row = 0,column = 1)
         self.entry2.grid(row = 1,column = 1)
@@ -103,9 +104,9 @@ class App(Frame):
         self.entry5.grid(row = 4,column = 1)
 
         for text in self.MODES:
-            self.b = Radiobutton(self,text=text,variable=self.v,value=text,
+            self.buttonlist = Radiobutton(self,text=text,variable=self.a,value=text,
                             anchor=W,justify=LEFT,width=16,command=self.sel)
-            self.b.grid(row = self.i,column=self.d)
+            self.buttonlist.grid(row = self.i,column=self.d)
             if(self.d == 1):
                 self.i += 1
                 self.d = 0
@@ -120,12 +121,13 @@ class App(Frame):
     #To be completed functions
 
     def sel(self):
-        self.radioButt = str(self.v.get())
+        self.radioButt = str(self.a.get())
         self.ComputerName = self.entry1.get()
         self.Ipaddress = self.entry2.get()
         self.User = self.entry3.get()
         self.Passw = self.entry4.get()
         self.TarPath = self.entry5.get()
+        self.LocalRemote = int(self.c.get())
     
     def AppCompatCache(self):
         pass
@@ -175,6 +177,7 @@ class App(Frame):
     def execute(self):
         arg = self.radioButt.replace(" ","_")
         print(arg)
+        print(self.LocalRemote)
         result = getattr(self, arg)
         result()
     
