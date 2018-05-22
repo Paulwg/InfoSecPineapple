@@ -1,4 +1,4 @@
-﻿import Local
+import Local
 import Remote
 
 class Juice(object):
@@ -15,5 +15,6 @@ class Juice(object):
             result = getattr(Local.Local, methodname)#method to be called
             result()
         if(self.arg1 == 1 ):
-            Remote.Remote.methodname()
+            result = getattr(Remote.Remote, methodname)
+            result()
         
