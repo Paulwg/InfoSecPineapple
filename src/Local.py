@@ -1,11 +1,16 @@
-﻿import subprocess
+from subprocess import Popen, PIPE, STDOUT
 
 class Local(object):
-    
+    '''
+    Local PowerShell commands and queries.
+    '''
     def AppCompatCache():
         pass
     def Process_Table():
-        subprocess.call(["C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe","get-process"])
+        cmd = 'C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe -windowstyle hidden'
+        p = Popen(cmd,stdin=PIPE,stdout=PIPE, stderr=PIPE, universal_newlines=True)#universal_newlines required in order to feed type bytes into redirector in Pineapplegedon
+        stdout, stderr = p.communicate(input='get-process')
+        return(stdout)
     def Prefetch():
         pass
     def Network_Connections():
