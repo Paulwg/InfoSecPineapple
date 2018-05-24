@@ -4,36 +4,63 @@ class Local(object):
     '''
     Local PowerShell commands and queries.
     '''
+    #universal_newlines required in order to feed type bytes into redirector in Pineapplegedon
+    cmd = 'C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe -windowstyle hidden'
+
     def AppCompatCache():
         pass
+    
     def Process_Table():
-        cmd = 'C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe -windowstyle hidden'
-        p = Popen(cmd,stdin=PIPE,stdout=PIPE, stderr=PIPE, universal_newlines=True)#universal_newlines required in order to feed type bytes into redirector in Pineapplegedon
-        stdout, stderr = p.communicate(input='get-process')
-        return(stdout)
-    def Prefetch():
+        proc = Popen(Local.cmd,stdin=PIPE,stdout=PIPE, stderr=PIPE, universal_newlines=True)
+        stdout, stderr = proc.communicate(input='get-process')
+        print(stdout)
+        while proc.returncode is None:
+            proc.poll()
+    
+    def Prefetch():        
         pass
+    
     def Network_Connections():
-        subprocess.call(["C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe","get-nettcpconnection"])
-    def Auto_Runs(self):
+        proc = Popen(Local.cmd,stdin=PIPE,stdout=PIPE, stderr=PIPE, universal_newlines=True)
+        stdout, stderr = proc.communicate(input='get-nettcpconnection')
+        print(stdout)
+        while proc.returncode is None:
+            proc.poll()
+            
+    def Auto_Runs():
         pass
-    def Sched_Tasks(self):
+    
+    def Sched_Tasks():
         pass
-    def Startup_Folders(self):
+    
+    def Startup_Folders():
         pass
-    def Services(self):
-        subprocess.call(["C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe","get-services"])
-    def Installed_Software(self):
+    
+    def Services():
+        proc = Popen(Local.cmd,stdin=PIPE,stdout=PIPE, stderr=PIPE, universal_newlines=True)
+        stdout, stderr = proc.communicate(input='get-service')
+        print(stdout)
+        while proc.returncode is None:
+            proc.poll()
+        
+    def Installed_Software():
         pass
-    def Unsigned_Executables(self):
+    
+    def Unsigned_Executables():
         pass
-    def Installed_Drivers(self):
+    
+    def Installed_Drivers():
         pass
-    def ADS(self):
+    
+    def ADS():
         pass
-    def Dir_Walk(self):
+    
+    def Dir_Walk():
         pass
-    def VSC_Walk_Timestamps(self):
+    
+    def VSC_Walk_Timestamps():
         pass
-    def MFT_timestamps(self):
+    
+    def MFT_timestamps():
         pass
+    
