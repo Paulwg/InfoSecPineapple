@@ -6,12 +6,12 @@ class Local(object):
     '''
     #universal_newlines required in order to feed type bytes into redirector in Pineapplegedon
     cmd = 'C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe -windowstyle hidden'
-
+    CREATE_NO_WINDOW = 0x08000000#change creation flag for console window to be off
     def AppCompatCache():
         pass
     
     def Process_Table():
-        proc = Popen(Local.cmd,stdin=PIPE,stdout=PIPE, stderr=PIPE, universal_newlines=True)
+        proc = Popen(Local.cmd,stdin=PIPE,stdout=PIPE, stderr=PIPE, creationflags=Local.CREATE_NO_WINDOW, universal_newlines=True)
         stdout, stderr = proc.communicate(input='get-process')
         print(stdout)
         while proc.returncode is None:
@@ -21,7 +21,7 @@ class Local(object):
         pass
     
     def Network_Connections():
-        proc = Popen(Local.cmd,stdin=PIPE,stdout=PIPE, stderr=PIPE, universal_newlines=True)
+        proc = Popen(Local.cmd,stdin=PIPE,stdout=PIPE, stderr=PIPE, creationflags=Local.CREATE_NO_WINDOW, universal_newlines=True)
         stdout, stderr = proc.communicate(input='get-nettcpconnection')
         print(stdout)
         while proc.returncode is None:
@@ -37,7 +37,7 @@ class Local(object):
         pass
     
     def Services():
-        proc = Popen(Local.cmd,stdin=PIPE,stdout=PIPE, stderr=PIPE, universal_newlines=True)
+        proc = Popen(Local.cmd,stdin=PIPE,stdout=PIPE, stderr=PIPE, creationflags=Local.CREATE_NO_WINDOW, universal_newlines=True)
         stdout, stderr = proc.communicate(input='get-service')
         print(stdout)
         while proc.returncode is None:
