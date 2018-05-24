@@ -14,6 +14,10 @@ class StdoutRedirector(IORedirector):
     '''A class for redirecting stdout to this Text widget.'''
     def write(self,str):
         self.text_area.insert("end",str)
+
+class CLR(IORedirector):
+    def nomore(self):
+        self.text_area.delete(0,END)
         
 class App(Frame):
     '''
@@ -42,7 +46,10 @@ class App(Frame):
         '''
         sys.stdout = StdoutRedirector(self.entry6)
         self.entry6.insert(END, inputStr)
-        
+
+    def CLRoutput(self):
+        sys.stdout = CLR(self.entry6)
+
 
     def create_variables(self):
         self.MODES = [
@@ -103,8 +110,8 @@ class App(Frame):
 
         self.submit = Button(self, text="Submit", command=self.execute)
 
-        self.label6 = Label(self,text="Output:")        
         self.entry6 = Text(self)
+        self.clearoutput = Button(self, text="Clear Output", command=self.CLRoutput)
         self.scrollbar = Scrollbar(self)
 
         self.entry6.config(yscrollcommand= self.scrollbar.set)#Pairing scrollbar with text entry
@@ -142,7 +149,7 @@ class App(Frame):
         
         self.submit.grid(row = self.i+1,columnspan=2,pady=4,sticky=NSEW)#Submit button
 
-        self.label6.grid(row=0,column=4)#Results
+        self.clearoutput.grid(row=0,column=4)#results clear
         self.entry6.grid(row=1,column=4,rowspan=18)#Results entry box
         self.scrollbar.grid(row=1,column=5,rowspan=20,sticky=N+S+W)#scrollbar
         
@@ -183,7 +190,7 @@ class Juice(object):
         if(self.arg1 == 0):# 0 represents local query
             print("Querying Local Machine for: ", methodname)
             result = getattr(Local.Local, methodname)#method to be called that is an attribut of the class
-            print(result())#print result for redirect of stdout            
+            result()#print result for redirect of stdout            
         if(self.arg1 == 1 ):
             result = getattr(Remote.Remote, methodname)
             result()
