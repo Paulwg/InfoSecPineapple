@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 from tkinter.constants import *
 from tkinter import *
+from tkinter import ttk
 import sys
 import Local
 import Remote
@@ -14,10 +15,6 @@ class StdoutRedirector(IORedirector):
     '''A class for redirecting stdout to this Text widget.'''
     def write(self,str):
         self.text_area.insert("end",str)
-
-class CLR(IORedirector):
-    def nomore(self):
-        self.text_area.delete(0,END)
         
 class App(Frame):
     '''
@@ -27,9 +24,11 @@ class App(Frame):
     def main(cls):
         GUI = Tk()
         app = cls(GUI)
+        app.config(bg='black', border='15')
         app.grid(sticky=NSEW)
         GUI.title('Pineapplegedon')
         GUI.resizable(True, True)
+        GUI.iconbitmap(r'..\Images\Pineapplegedon.ico')
         GUI.frame = Frame()
         GUI.mainloop()
 
@@ -48,8 +47,8 @@ class App(Frame):
         self.entry6.insert(END, inputStr)
 
     def CLRoutput(self):
-        sys.stdout = CLR(self.entry6)
-
+        self.entry6.config(state=NORMAL)
+        self.entry6.delete(1.0,END)
 
     def create_variables(self):
         self.MODES = [
@@ -91,43 +90,43 @@ class App(Frame):
 
         self.master.config(menu=menu)#binding instance as menu
 
-        self.label1 = Label(self, text="Computer Name:")
-        self.label2 = Label(self, text="IP Address:")
-        self.label3 = Label(self, text="Username:")
-        self.label4 = Label(self, text="Password:")
-        self.label5 = Label(self, text="Path:")
+        self.label1 = Label(self, text="Computer Name:",font='system 10',bg='cyan')
+        self.label2 = Label(self, text="IP Address:",font='system 10',bg='cyan')
+        self.label3 = Label(self, text="Username:",font='system 10',bg='cyan')
+        self.label4 = Label(self, text="Password:",font='system 10',bg='cyan')
+        self.label5 = Label(self, text="Path:",font='system 10',bg='cyan')
 
-        self.entry1 = Entry(self)
-        self.entry2 = Entry(self)
-        self.entry3 = Entry(self)
-        self.entry4 = Entry(self)
-        self.entry5 = Entry(self)
+        self.entry1 = Entry(self,font='system 10',bg='alice blue')
+        self.entry2 = Entry(self,font='system 10',bg='alice blue')
+        self.entry3 = Entry(self,font='system 10',bg='alice blue')
+        self.entry4 = Entry(self,font='system 10',bg='alice blue')
+        self.entry5 = Entry(self,font='system 10',bg='alice blue')
 
-        self.button1 = Radiobutton(self,text="Local",variable=self.c,value=0,indicatoron=0)#local 0 or remote 1
-        self.button2 = Radiobutton(self,text="Remote",variable=self.c,value=1,indicatoron=0)
+        self.button1 = Radiobutton(self,text="Local",variable=self.c,value=0,indicatoron=0,font='system 10',bg='cyan',selectcolor='purple')#local 0 or remote 1
+        self.button2 = Radiobutton(self,text="Remote",variable=self.c,value=1,indicatoron=0,font='system 10',bg='cyan',selectcolor='purple')
 
-        self.buttonlist = Radiobutton(self)#List of Selections
+        self.buttonlist = Radiobutton(self,font='system 9',bg='spring green')#List of Selections
 
-        self.submit = Button(self, text="Submit", command=self.execute)
+        self.submit = Button(self, text="Submit", command=self.execute,font='system 10',bg='cyan')
 
-        self.entry6 = Text(self)
-        self.clearoutput = Button(self, text="Clear Output", command=self.CLRoutput)
+        self.entry6 = Text(self,height=25,width=100,bg='alice blue')
+        self.clearoutput = Button(self, text="Clear Output", command=self.CLRoutput,font='system 9',bg='cyan')
         self.scrollbar = Scrollbar(self)
 
         self.entry6.config(yscrollcommand= self.scrollbar.set)#Pairing scrollbar with text entry
-        self.scrollbar.config(command=self.entry6.yview)
+        self.scrollbar.config(command=self.entry6.yview,troughcolor='yellow')
 
     def grid_widgets(self):
         options1 = dict(sticky=NSEW)
         
-        self.label1.grid(row = 0,**options1)#ComputerName
-        self.label2.grid(row = 1,**options1)#IP Address
-        self.label3.grid(row = 2,**options1)#Username
-        self.label4.grid(row = 3,**options1)#Password
-        self.label5.grid(row = 4,**options1)#Path
+        self.label1.grid(row = 0,padx=2,pady=1,**options1)#ComputerName
+        self.label2.grid(row = 1,padx=2,pady=1,**options1)#IP Address
+        self.label3.grid(row = 2,padx=2,pady=1,**options1)#Username
+        self.label4.grid(row = 3,padx=2,pady=1,**options1)#Password
+        self.label5.grid(row = 4,padx=2,pady=1,**options1)#Path
         
-        self.button1.grid(row = 5,column = 0,**options1)#Local
-        self.button2.grid(row = 5,column = 1,**options1)#Remote
+        self.button1.grid(row = 5,column = 0,padx=2,pady=2,**options1)#Local
+        self.button2.grid(row = 5,column = 1,padx=2,pady=2,**options1)#Remote
 
         self.entry1.grid(row = 0,column = 1)#Entry for ComputerName
         self.entry2.grid(row = 1,column = 1)#Entry for IP Address
@@ -136,8 +135,8 @@ class App(Frame):
         self.entry5.grid(row = 4,column = 1)#Entry for Path
 
         for text in self.MODES:#Grid for list of radiobuttons
-            self.buttonlist = Radiobutton(self,text=text,variable=self.a,value=text,
-                            anchor=W,justify=LEFT,width=16,command=self.select)#command calls to select when new button is clicked
+            self.buttonlist = Radiobutton(self,text=text,variable=self.a,value=text,pady=2,
+                            anchor=W,font='system 9',bg='cyan',activebackground='purple',justify=LEFT,width=16,command=self.select)#command calls to select when new button is clicked
             self.buttonlist.grid(row = self.i,column=self.d)
             if(self.d == 1):
                 self.i += 1
@@ -149,9 +148,9 @@ class App(Frame):
         
         self.submit.grid(row = self.i+1,columnspan=2,pady=4,sticky=NSEW)#Submit button
 
-        self.clearoutput.grid(row=0,column=4)#results clear
-        self.entry6.grid(row=1,column=4,rowspan=18)#Results entry box
-        self.scrollbar.grid(row=1,column=5,rowspan=20,sticky=N+S+W)#scrollbar
+        self.clearoutput.grid(row=0,column=4,padx=2,pady=1,)#results clear
+        self.entry6.grid(row=1,column=4,rowspan=12,padx=3)#Results entry box
+        self.scrollbar.grid(row=1,column=5,rowspan=12,sticky=N+S+W)#scrollbar
         
 
     def select(self):#called from radiobutton selection
