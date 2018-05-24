@@ -1,9 +1,11 @@
 #! /usr/bin/env python
 from tkinter.constants import *
 from tkinter import *
+from tkinter.filedialog import asksaveasfilename
 import sys
 import Local
 import Remote
+import time
 
 class IORedirector(object):
     '''A general class for redirecting I/O to this Text widget.'''
@@ -49,6 +51,17 @@ class App(Frame):
         self.entry6.config(state=NORMAL)
         self.entry6.delete(1.0,END)
 
+    def Save_Output(self):
+        
+        fileit = asksaveasfilename()
+        if fileit:
+            writer = open(fileit, 'w')
+            thegoods = self.entry6.get(1.0,END)
+            writer.write(thegoods)
+            writer.close()
+        else:
+            print("error")
+
     def create_variables(self):
         self.MODES = [
             ("AppCompatCache"),
@@ -77,8 +90,7 @@ class App(Frame):
         menu = Menu(self.master)
 
         filemenu = Menu(self, tearoff=0)
-        filemenu.add_command(label="New", command=None)
-        filemenu.add_command(label="Open...",command= None)
+        filemenu.add_command(label="Save...",command=self.Save_Output)
         filemenu.add_separator()
         filemenu.add_command(label="Exit", command=None)
         menu.add_cascade(label="File", menu=filemenu)
