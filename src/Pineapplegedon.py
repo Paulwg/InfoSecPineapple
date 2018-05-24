@@ -1,7 +1,6 @@
 #! /usr/bin/env python
 from tkinter.constants import *
 from tkinter import *
-from tkinter import ttk
 import sys
 import Local
 import Remote
